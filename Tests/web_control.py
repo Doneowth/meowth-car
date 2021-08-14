@@ -3,10 +3,17 @@ import pygame
 from time import sleep
 
 FL_MOTOR = 0
-FR_MOTOR = 0
-RL_MOTOR = 0
-RR_MOTOR = 0
-
+FR_MOTOR = 1
+RL_MOTOR = 2
+RR_MOTOR = 3
+# 17-Low 13 backwards
+# 17-High 13 forwards
+# 22-Low 13 backwards 24 forwards
+# 22-High 13 backwards
+# 23-Low 13 backwards
+# 23-High Broken
+# 24-Low Broken
+# 24-High OK
 
 def forward():
     init()
@@ -52,12 +59,15 @@ def init():
     gpio.setup(22, gpio.OUT)
     gpio.setup(23, gpio.OUT)
     gpio.setup(24, gpio.OUT)
+    
+def clean_up_gpio():
+    gpio.cleanup()
 
 
 print("motors activated")
 run = True
 pygame.init()
-size = [500, 900]
+size = [200, 200]
 screen = pygame.display.set_mode(size)
 
 pygame.display.set_caption("My Keyboard Controller")
@@ -65,6 +75,8 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+            print("quit")
+            exit(0)
         elif event.type == pygame.KEYUP:
             gpio.cleanup()
         # keys control
@@ -72,15 +84,19 @@ while run:
             if event.key == pygame.K_a:
                 print("finished")
                 gpio.cleanup()
-            if event.key == pygame.K_LEFT:
+            elif event.key == pygame.K_LEFT:
+                print("==left==")
                 left()
-            if event.key == pygame.K_RIGHT:
+            elif event.key == pygame.K_RIGHT:
+                print("==right==")                
                 right()
-            if event.key == pygame.K_UP:
+            elif event.key == pygame.K_UP:
+                print("==forward==") 
                 forward()
-            if event.key == pygame.K_DOWN:
+            elif event.key == pygame.K_DOWN:
+                print("==backward==")
                 backward()
             else:
                 gpio.cleanup()
-
-
+        else:
+            gpio.cleanup()
