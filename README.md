@@ -19,3 +19,6 @@
 ## Milestone 4 OpenCV Engagement  
 
 <br>
+
+project deprecated
+
