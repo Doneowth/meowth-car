@@ -77,15 +77,19 @@ while run:
             if event.key == pygame.K_UP:
                 forward()
             if event.key == pygame.K_DOWN:
+                print('down')
                 backward()
         # ps4 controller control
         axis0 = joystick0.get_axis(0)
         axis1 = joystick0.get_axis(1)
         # up 0,-1 down 0,1 left -1,0 right 1,0
         if abs(axis0) < 0.2 and axis1 < -0.6:
-            forward()
-        elif abs(axis0) < 0.2 and axis1 > 0.6:
+            #forward()
             backward()
+        elif abs(axis0) < 0.2 and axis1 > 0.6:
+            #backward()
+            forward()
+            print('dd')
         elif abs(axis1) < 0.2 and axis0 < -0.6:
             left()
         elif abs(axis1) < 0.2 and axis0 > 0.6:

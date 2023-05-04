@@ -2,6 +2,7 @@ import sys
 import pygame
 import pygame.camera
 from car_control import *
+from random import randrange
 
 pygame.init()
 pygame.camera.init()
@@ -23,13 +24,12 @@ while running:
         str(pygame.time.Clock().get_fps())
                                  , 1, pygame.Color(0,0,0))
     screen.blit(fps_overlay, (0,0))
-    #print("pre time: " + str(pygame.time.Clock().get_fps()))
+    # print("pre time: " + str(pygame.time.Clock().get_fps()))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
             cam.stop()
-            pygame.quit()
-            
+            pygame.quit()            
             exit(0)
         elif event.type == pygame.KEYUP:
             gpio.cleanup()
@@ -50,5 +50,10 @@ while running:
             elif event.key == pygame.K_DOWN:
                 print("==backward==")
                 backward()
+            elif event.key == pygame.K_SPACE:
+                print("==collect==")
+                f_img = "/home/pi/Desktop/DATASET/" + str(randrange(1000)) + ".jpg"
+                img_data = pygame.transform.scale(live_img, (100,100))
+                pygame.image.save(img_data, f_img)
             else:
                 clean_up_gpio()
